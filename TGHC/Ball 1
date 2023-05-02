@@ -1,0 +1,35 @@
+#include <tg_recv.h>
+#include "messages/ball_message.h"
+#include <iostream>
+
+// Connect to IDNP using TGHC
+const char* idnp_address = "127.0.0.1";
+int idnp_port = 8888;
+tg_recv_init(idnp_address, idnp_port);
+
+// Create a BallMessage object to hold the position data
+BallMessage ball_message;
+ball_message.set_id(1);
+
+// Main game loop
+while (true) {
+    // Receive a BallMessage object using TGHC
+    tg_recv((void*)ball_message, sizeof(ball_message));
+
+    // Get the position data from the BallMessage object
+    float ball_position_x = ball_message.get_position_x();
+    std::string ball_position_y = ball_message.get_position_y();
+
+    // Lock the orientation of Ball 1 to be orthogonal to Ball A
+    float ball_orientation_x = 0;
+    float ball_orientation_y = 1;
+    float ball_orientation_z = 0;
+
+    // Update the BallMessage object with the new orientation data
+    ball_message.set_orientation_x(ball_orientation_x);
+    ball_message.set_orientation_y(ball_orientation_y);
+    ball_message.set_orientation_z(ball_orientation_z);
+
+    // Send the BallMessage object back using TGHC
+    tg_send((const void*)ball_message, sizeof(ball_message));
+}
