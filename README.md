@@ -1,6 +1,8 @@
 # IDNP
 idnp/
-sf_library
+sf_library:/
+    /TGHC(A).indp
+    /TGHC(1).indp
 idnp/TGHC/
     client/
         client.cpp
@@ -16,9 +18,13 @@ idnp/TGHC/
         networking/
             twisted/
                 ...
-        messages/
-            ball_message.py
-            ...
+        A/
+            ball_crypt.py
+            inode[(-1,0,1)][char **str]
+        README.md
+        1/
+            ball_dcrypt.py
+            inode[(-1,0,1)][char *str]
         README.md
     sdk/
         idnp.h
