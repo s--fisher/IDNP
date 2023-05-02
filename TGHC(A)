@@ -1,0 +1,77 @@
+// Include necessary libraries and headers
+#include <stdio.h>
+#include <rpc/rpc.h>
+#include "idnp.h"
+
+// Define the server and client structures
+#define TGHC_PROG_NUM 0x20000001
+#define TGHC_VERS_NUM 1
+#define TGHC_PROC_NUM 1
+
+struct tghc_message {
+    char* message;
+};
+
+struct tghc_result {
+    int result;
+};
+
+// Define the IDNP message structure
+struct idnp_message {
+    uint16_t type;
+    uint16_t length;
+    uint8_t* data;
+};
+
+// Define the IDNP client and server functions
+struct idnp_message* idnp_call(char* server_ip, int server_port, struct idnp_message* request) {
+    CLIENT* cl;
+    struct timeval timeout = { 25, 0 };
+    struct idnp_message* response;
+    cl = clnt_create(server_ip, IDNP_PROG_NUM, IDNP_VERS_NUM, "udp");
+    clnt_control(cl, CLSET_TIMEOUT, &timeout);
+    response = idnp_call_1(*request, cl);
+    clnt_destroy(cl);
+    return response;
+}
+
+void idnp_handle_request(struct idnp_message* request, struct idnp_message** response, struct svc_req* req) {
+    struct tghc_message* tghc_request = (struct tghc_message*) request->data;
+    struct tghc_result* tghc_response = (struct tghc_result*) malloc(sizeof(struct tghc_result));
+    tghc_response->result = tghc_process_message(tghc_request->message);
+    *response = (struct idnp_message*) malloc(sizeof(struct idnp_message));
+    (*response)->type = IDNP_RESPONSE_TYPE;
+    (*response)->length = sizeof(struct tghc_result);
+    (*response)->data = (uint8_t*) tghc_response;
+}
+
+// Define the main function
+int main(int argc, char* argv[]) {
+    char* server_ip = "192.168.1.10";
+    int server_port = 9000;
+    struct idnp_message* request;
+    struct idnp_message* response;
+    struct tghc_message tghc_request;
+    struct tghc_result* tghc_response;
+    
+    // Initialize the request and response
+    tghc_request.message = "Hello, world!";
+    request = (struct idnp_message*) malloc(sizeof(struct idnp_message));
+    request->type = IDNP_REQUEST_TYPE;
+    request->length = sizeof(struct tghc_message);
+    request->data = (uint8_t*) &tghc_request;
+    
+    // Call the IDNP client function to send the request
+    response = idnp_call(server_ip, server_port, request);
+    
+    // Parse the response and print the result
+    tghc_response = (struct tghc_result*) response->data;
+    printf("Result: %d\n", tghc_response->result);
+    
+    // Free the memory used by the request and response
+    free(request);
+    free(response);
+    free(tghc_response);
+    
+    return 0;
+}
