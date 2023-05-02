@@ -1,0 +1,19 @@
+# Define the TGHC system
+TGHC = {
+    "Ball 1": "./TGHC/Ball 1",
+    "Ball A": "./TGHC/Ball A"
+}
+
+# Define a function to execute a ball
+def execute_ball(ball_name):
+    # Check if the ball exists in the TGHC system
+    if ball_name in TGHC:
+        # Retrieve the path to the ball's file
+        ball_path = TGHC[ball_name]
+        # Execute the ball's contents
+        exec(open(ball_path).read())
+    else:
+        print(f"Ball {ball_name} does not exist in the TGHC system.")
+
+# Example usage: execute Ball 1
+execute_ball("Ball 1")
