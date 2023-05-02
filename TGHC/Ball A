@@ -1,0 +1,28 @@
+#include <tg_send.h>
+#include "messages/ball_message.h"
+#include <iostream>
+
+// Connect to IDNP using TGHC
+const char* idnp_address = "127.0.0.1";
+int idnp_port = 8888;
+tg_send_init(idnp_address, idnp_port);
+
+// Create a BallMessage object to hold the position data
+BallMessage ball_message;
+ball_message.set_id(0);
+
+// Main game loop
+while (true) {
+    // Get the current time of day
+    int current_time = get_time_of_day();
+
+    // Request the IP location of the current machine
+    std::string ip_location = request_ip_location();
+
+    // Update the BallMessage object with the new position data
+    ball_message.set_position_x(current_time);
+    ball_message.set_position_y(ip_location);
+
+    // Send the BallMessage object using TGHC
+    tg_send((const void*)ball_message, sizeof(ball_message));
+}
