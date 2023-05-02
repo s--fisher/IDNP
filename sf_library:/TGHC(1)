@@ -1,0 +1,12 @@
+/TGHC(A)
+.
+#include <stdio.h>
+
+void tghc(int argc, char *argv[]) {
+    printf("trundle ? >");
+}
+
+int main(int argc, char *argv[]) {
+    tghc(argc, argv);
+    return 0;
+}
