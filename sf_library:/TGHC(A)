@@ -1,0 +1,33 @@
+/TGHC(A)
+.
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "tghc.h"
+
+int main() {
+    clock_t start, end;
+    double cpu_time_used;
+
+    start = clock();
+
+    // Initialize the TGHC library
+    tghc_init();
+
+    // Your program logic goes here
+    // ...
+
+    // Wait for a CALL request
+    tghc_wait_call();
+
+    // Output a response to the CALL request
+    tghc_send_response("trundle? > ");
+
+    // Shut down the TGHC library
+    tghc_shutdown();
+
+    end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Elapsed CPU time: %f seconds\n", cpu_time_used);
+    return 0;
+}
