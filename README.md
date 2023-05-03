@@ -1,5 +1,5 @@
 # IDNP
-# The IDNP (Instantons Data Networking Protocol) is a networking protocol designed to transmit data across large distances, using a 3D disk space to store and transmit data. The protocol works by mapping virtual addresses to physical locations on the disk, and using a set of algorithms to encrypt and decrypt the data being transmitted.
+# The IDNP (Instantaneous Data Networking Protocol) is a networking protocol designed to transmit data across large distances, using a 3D disk space to store and transmit data. The protocol works by mapping virtual addresses to physical locations on the disk, and using a set of algorithms to encrypt and decrypt the data being transmitted.
 
 # In more technical terms, the IDNP uses a 64-bit virtual address space and 64-bit words to represent data, and uses a 65 petabyte disk to store the data. Users can create IDNP networks using a 4 petabyte disk, and quest up to 3 petabytes of data on the network. The protocol uses TGHC (Timing Graphics Human Computing) to generate random numbers that are used to encrypt and decrypt data transmissions.
 
