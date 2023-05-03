@@ -13,7 +13,7 @@ $(EXECUTABLE): $(OBJECTS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -I./sf_library
 
-idnp.o: idnp.c idnp.h sf.h
+idnp.o: idnp.c idnp.h -I./sf_library
 tghc.o: tghc.c tghc.h sf.h
 
 clean:
