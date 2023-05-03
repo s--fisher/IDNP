@@ -1,3 +1,9 @@
+sf_library:
+	mkdir $@
+
+sf_library/%.h: %.h | sf_library
+	cp $< $@
+
 # IDNP Makefile with RAID 0, RAID 1, and RAID 5
 CC = gcc
 CFLAGS = -Wall -Werror -g
@@ -11,10 +17,13 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< ./sf_library
+	$(CC) $(CFLAGS) -I./sf_library -c $< $(LIBS)
 
-idnp.o: idnp.c idnp.h  sf_library
-tghc.o: tghc.c tghc.h sf.h
+idnp.o: idnp.c idnp.h sf_library/sf.h
+	$(CC) $(CFLAGS) -I./ -I./sf_library -c $< $(LIBS)
+
+tghc.o: tghc.c tghc.h sf_library/sf.h
+	$(CC) $(CFLAGS) -I./ -I./sf_library -c $< $(LIBS)
 
 clean:
 	rm -f $(EXECUTABLE) $(OBJECTS)
@@ -52,3 +61,21 @@ raid5:
 # Create RAID 0 on SATA array
 raid0-sata:
 	sudo mdadm --create /dev/idnp-raid0-sata --level=0 --raid-devices=2 /dev/sdl /dev/lib
+
+run:
+	gcc client.c -o client1 -lm -Wall
+#	__start':
+#		> trundle client[%]
+#		> tundle ?
+#	^C
+	echo "client ? > "
+	./client1
+
+clean:
+	rm client
+
+install:
+##	clear
+	if [ ! -f client ]; \
+	then \
+		make clean && make && echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -
