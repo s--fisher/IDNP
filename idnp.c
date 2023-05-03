@@ -10,6 +10,12 @@
 
 #define BUFFER_SIZE 1024
 
+enum ProcessStatus {
+    CALL,
+    WAITS,
+    WAIT_CALLS
+};
+
 char *read_line() {
     char *line = NULL;
     size_t bufsize = 0;
@@ -35,9 +41,9 @@ char **parse_args(char *line) {
     return tokens;
 }
 
-void execute(char **args) {
+void execute(char **args, enum ProcessStatus *status) {
     pid_t pid, wpid;
-    int status;
+    int proc_status;
     pid = fork();
     if (pid == 0) {
         if (execvp(args[0], args) == -1) {
@@ -48,26 +54,45 @@ void execute(char **args) {
         perror("idnp");
     } else {
         do {
-            wpid = waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+            wpid = waitpid(pid, &proc_status, WUNTRACED);
+        } while (!WIFEXITED(proc_status) && !WIFSIGNALED(proc_status));
+        if (wpid == -1) {
+            *status = CALL;
+        } else if (WIFEXITED(proc_status)) {
+            *status = WAITS;
+        } else {
+            *status = WAIT_CALLS;
+        }
     }
 }
 
-void smash() {
+void run() {
     char *line;
     char **args;
-    int status;
+    enum ProcessStatus status;
     do {
         printf("trundle ? > ");
         line = read_line();
         args = parse_args(line);
-        execute(args);
+        execute(args, &status);
         free(line);
         free(args);
-    } while (status);
+
+        switch (status) {
+            case CALL:
+                printf("CALL\n");
+                break;
+            case WAITS:
+                printf("WAITS\n");
+                break;
+            case WAIT_CALLS:
+                printf("WAIT CALLS\n");
+                break;
+        }
+    } while (status != WAITS);
 }
 
 int main() {
-    smash();
+    run();
     return EXIT_SUCCESS;
-}
+} 
