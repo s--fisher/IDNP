@@ -11,7 +11,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< -I./sf_library
 
 idnp.o: idnp.c idnp.h sf.h
 tghc.o: tghc.c tghc.h sf.h
