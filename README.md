@@ -22,24 +22,24 @@
 # Run the following command to install IDNP:
 
 # # Install dependencies
-sudo apt-get install libsf-dev
+  # sudo apt-get install libsf-dev
 
 # Compile the software
-make
+  # make
 
 # Copy the executable and required files
-sudo cp idnp /usr/local/bin/
-sudo cp -R sf_library: /usr/local/include/
+  # sudo cp idnp /usr/local/bin/
+  # sudo cp -R sf_library: /usr/local/include/
 
 # Create configuration files and directories
-sudo mkdir /etc/idnp
-sudo cp idnp.conf /etc/idnp/
+  # sudo mkdir /etc/idnp
+  # sudo cp idnp.conf /etc/idnp/
 
 # Install systemd service
-sudo cp idnp.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable idnp.service
-sudo systemctl start idnp.service
+  # sudo cp idnp.service /etc/systemd/system/
+  # sudo systemctl daemon-reload
+  # sudo systemctl enable idnp.service
+  # sudo systemctl start idnp.service
 
 # Copy code
 # python setup.py install
