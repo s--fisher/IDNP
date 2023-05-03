@@ -21,7 +21,26 @@
 
 # Run the following command to install IDNP:
 
-# arduino
+# # Install dependencies
+sudo apt-get install libsf-dev
+
+# Compile the software
+make
+
+# Copy the executable and required files
+sudo cp idnp /usr/local/bin/
+sudo cp -R sf_library: /usr/local/include/
+
+# Create configuration files and directories
+sudo mkdir /etc/idnp
+sudo cp idnp.conf /etc/idnp/
+
+# Install systemd service
+sudo cp idnp.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable idnp.service
+sudo systemctl start idnp.service
+
 # Copy code
 # python setup.py install
 # After completing these steps, IDNP should be installed on your system and ready to use.
