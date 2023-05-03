@@ -26,4 +26,4 @@
 # python setup.py install
 # After completing these steps, IDNP should be installed on your system and ready to use.
 
-# You can verify that IDNP is installed correctly by running the import idnp command in a Python shell. If no error occurs, then the package is installed correctly.
+# You can verify that IDNP is installed correctly by typing make in the console.
