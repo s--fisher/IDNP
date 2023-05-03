@@ -6,3 +6,24 @@
 # The IDNP Makefile is a script that compiles the IDNP protocol, and allows it to be executed on a given system. The Makefile specifies the various components of the protocol, including the main IDNP program, as well as various libraries and other dependencies required for the protocol to run.
 
 # Overall, the IDNP is a powerful and innovative networking protocol that offers many advantages over traditional networking protocols, particularly for transmitting large amounts of data across vast distances.
+
+#Make sure you have Python 3 installed on your system. If you don't have it, you can download it from the official Python website: https://www.python.org/downloads/
+
+#Install the necessary dependencies. IDNP requires Scapy and PyShark packages to be installed. You can install them using pip by running the following command:
+
+# Copy code
+# pip install scapy pyshark
+# Download the IDNP package from the GitHub repository: https://github.com/s--fisher/IDNP
+
+# Extract the contents of the downloaded ZIP file.
+
+# Navigate to the extracted directory using the command line.
+
+# Run the following command to install IDNP:
+
+# arduino
+# Copy code
+# python setup.py install
+# After completing these steps, IDNP should be installed on your system and ready to use.
+
+# You can verify that IDNP is installed correctly by running the import idnp command in a Python shell. If no error occurs, then the package is installed correctly.
