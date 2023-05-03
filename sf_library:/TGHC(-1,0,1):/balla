@@ -1,0 +1,41 @@
+import math
+
+# Define the size of the ball
+SIZE_X = 100
+SIZE_Y = 100
+SIZE_Z = 100
+
+# Generate the ball
+ball = []
+for z in range(SIZE_Z):
+    for y in range(SIZE_Y):
+        for x in range(SIZE_X):
+            ball.append((x, y, z))
+
+# Convert the ball to spherical coordinates
+spherical_ball = []
+for x, y, z in ball:
+    r = math.sqrt(x**2 + y**2 + z**2)
+    theta = math.atan2(y, x)
+    phi = math.acos(z / r)
+    spherical_ball.append((r, theta, phi))
+
+# Define a function to remodulate the ball using calculus and spherical coordinates
+def remodulate_ball(spherical_ball):
+    remodulated_ball = []
+    for r, theta, phi in spherical_ball:
+        # Apply a function to remodulate the ball
+        # For example, scale the radius by sin(θ) * sin(φ)
+        remodulated_r = r * math.sin(theta) * math.sin(phi)
+        # Convert back to Cartesian coordinates and append to the remodulated ball
+        x = remodulated_r * math.cos(theta) * math.sin(phi)
+        y = remodulated_r * math.sin(theta) * math.sin(phi)
+        z = remodulated_r * math.cos(phi)
+        remodulated_ball.append((x, y, z))
+    return remodulated_ball
+
+# Remodulate the ball
+remodulated_ball = remodulate_ball(spherical_ball)
+
+print("Original ball:", ball[:9])
+print("Remodulated ball:", remodulated_ball[:9])
