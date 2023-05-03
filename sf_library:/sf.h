@@ -330,7 +330,7 @@ int lexer(char *line, char ***args, int *num_args){
 
 
 int sf_reset(){
-	printf("smash> ");
+	printf("trundle ? > ");
 	fflush(stdout);
     fexit = 0;
     fcd = 0;

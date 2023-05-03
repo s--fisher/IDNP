@@ -27,6 +27,7 @@ tghc.o: tghc.c tghc.h sf_library/sf.h
 
 clean:
 	rm -f $(EXECUTABLE) $(OBJECTS)
+	rm client
 
 # Check if IDNP filesystem is mounted, then create RAID 0
 raid0:
@@ -63,19 +64,24 @@ raid0-sata:
 	sudo mdadm --create /dev/idnp-raid0-sata --level=0 --raid-devices=2 /dev/sdl /dev/lib
 
 run:
-	gcc client.c -o client1 -lm -Wall
+	gcc client.c -o client -lm -Wall
 #	__start':
 #		> trundle client[%]
 #		> tundle ?
 #	^C
 	echo "client ? > "
-	./client1
-
-clean:
-	rm client
+	./client
 
 install:
-##	clear
+	clear
 	if [ ! -f client ]; \
-	then \
-		make clean && make && echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -
+		then \
+			clear; \
+			make clean; \
+			echo "SUCCESS"; \
+	fi
+	make
+	echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -"
+	make run
+	clear
+

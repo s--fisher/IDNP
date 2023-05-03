@@ -1,73 +1,67 @@
+// ***************************************
+// ****** SHIA AARON LLOYD FISHER ********
+// ********* FEBUARY 13, 2023 ************
+// ************** PROJECT 3 **************
+// ****** SUPER MADISON SHELL SMASH  *****
+// ***************************************
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <arpa/inet.h>
+#include <ctype.h> //OPTing
 #include <unistd.h>
-#include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/wait.h> //fork wait
+#include <time.h> //for randomization
+#include <math.h>
+#include "sf_library:/sf.h"
 
-#define BUFFER_SIZE 1024
+int main(){
 
-char *read_line() {
-    char *line = NULL;
-    size_t bufsize = 0;
-    getline(&line, &bufsize, stdin);
-    return line;
-}
+	while(1){
+//access variables
+	    char *argv;
+	    char **exec;
 
-char **parse_args(char *line) {
-    int bufsize = 64, pos = 0;
-    char **tokens = malloc(bufsize * sizeof(char*));
-    char *token;
-    token = strtok(line, " \t\n");
-    while (token != NULL) {
-        tokens[pos] = token;
-        pos++;
-        if (pos >= bufsize) {
-            bufsize += 64;
-            tokens = realloc(tokens, bufsize * sizeof(char*));
-        }
-        token = strtok(NULL, " \t\n");
-    }
-    tokens[pos] = NULL;
-    return tokens;
-}
+	    int argc;
+//PROGRAM START
+		sf_reset();
+//INSTANTIATION
+	    getline(&argv,&bufsize,stdin);
+		lexer(argv, &exec, &argc);
 
-void execute(char **args) {
-    pid_t pid, wpid;
-    int status;
-    pid = fork();
-    if (pid == 0) {
-        if (execvp(args[0], args) == -1) {
-            perror("idnp");
-        }
-        exit(EXIT_FAILURE);
-    } else if (pid < 0) {
-        perror("idnp");
-    } else {
-        do {
-            wpid = waitpid(pid, &status, WUNTRACED);
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
-}
-
-void smash() {
-    char *line;
-    char **args;
-    int status;
-    do {
-        printf("trundle ? > ");
-        line = read_line();
-        args = parse_args(line);
-        execute(args);
-        free(line);
-        free(args);
-    } while (status);
-}
-
-int main() {
-    smash();
-    return EXIT_SUCCESS;
+//MAIN STRING TRAVERSAL
+		for(int i = 0; i < argc; i++){
+			progCtrl:
+	    	char **myARG;
+				if((i+1) == argc){
+					sf_myArg(&argnum, i, &myARG, exec);
+					if(fPtest){
+//						sf_printcmd(myARG, getpid());
+						//printf("T = %s ?\n", exec[i]);
+					}
+					goto runMe;
+				} else if( (strcmp(exec[i],DELIMITER) == 0) ){
+//MY ARG FORMATION
+					sf_myArg(&argnum, i, &myARG, exec);
+					if(fPtest){
+	//					sf_printcmd(myARG, getpid());
+						//printf("B\n");
+					}
+					goto runMe;
+				}
+				else{//////////////END OF ARGUMENT INPUT STREAM BY DELIMITER
+					argnum++;
+					i++;
+					goto progCtrl;
+				}
+runMe:
+	if(fPtest){
+		sf_printcmd(myARG, getpid());
+	}
+	sf_run(myARG);
+		}
+	}
+	return 0;
 }
