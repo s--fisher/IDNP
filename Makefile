@@ -26,8 +26,13 @@ tghc.o: tghc.c tghc.h sf_library/sf.h
 	$(CC) $(CFLAGS) -I./ -I./sf_library -c $< $(LIBS)
 
 clean:
+	clear
 	rm -f $(EXECUTABLE) $(OBJECTS)
-	rm client
+	if [ -f client ]; \
+		then \
+			rm client; \
+	fi
+	echo "INDP shutdown";
 
 # Check if IDNP filesystem is mounted, then create RAID 0
 raid0:
@@ -69,22 +74,31 @@ run:
 #		> trundle client[%]
 #		> tundle ?
 #	^C
-	if [ ! -f client ]; \
-		echo "client ? > "
-		./client
-	else;
-		make install
+	if [ -f client ]; \
+		then \
+			./client; \
+	fi
+#	if [-f client ]; \
+		then \
+			echo "client ? > "; \
+			echo "IDNP online"; \
+				/* WAIT */ \
+				./client \
+			echo "IDNP offline"; \
+	else; \
+		make install \
+	fi
 
 install:
 	clear
-	if [ ! -f client ]; \
+	if [ -f client ]; \
 		then \
 			clear; \
-			make clean; \
-			echo "IDNP online"; \
+			rm -f $(EXECUTABLE) $(OBJECTS); \
+			rm client; \
 	fi
-	make
-	echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -"
-	make run
-	clear
+	echo "INDP installing";
+	make;
+	echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -";
+	echo "IDNP installed";
 
