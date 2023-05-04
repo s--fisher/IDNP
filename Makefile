@@ -69,24 +69,22 @@ raid0-sata:
 	sudo mdadm --create /dev/idnp-raid0-sata --level=0 --raid-devices=2 /dev/sdl /dev/lib
 
 run:
+#	if [ -f INDP ]; \
+		then \
+			mkdir INDP; \
+	fi
 	gcc client.c -o client -lm -Wall
-#	__start':
-#		> trundle client[%]
-#		> tundle ?
-#	^C
 	if [ -f client ]; \
 		then \
 			./client; \
 	fi
-#	if [-f client ]; \
+#	__start':
+#		> trundle client[%]
+#		> tundle ?
+#	^C
+#	if [ -f client ]; \
 		then \
-			echo "client ? > "; \
-			echo "IDNP online"; \
-				/* WAIT */ \
-				./client \
-			echo "IDNP offline"; \
-	else; \
-		make install \
+			./INDP/client; \
 	fi
 
 install:

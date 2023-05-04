@@ -18,7 +18,7 @@
 #include "sf_library:/sf.h"
 
 int main(){
-
+	char **myARG;
 	while(1){
 //access variables
 	    char *argv;
@@ -34,7 +34,6 @@ int main(){
 //MAIN STRING TRAVERSAL
 		for(int i = 0; i < argc; i++){
 			progCtrl:
-	    		char **myARG;
 				if((i+1) == argc){
 					sf_myArg(&argnum, i, &myARG, exec);
 					if(fPtest){
