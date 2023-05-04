@@ -32,7 +32,7 @@ clean:
 		then \
 			rm client; \
 	fi
-	echo "INDP shutdown";
+	echo "IDNP shutdown";
 
 # Check if IDNP filesystem is mounted, then create RAID 0
 raid0:
