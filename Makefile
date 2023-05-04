@@ -81,7 +81,7 @@ install:
 		then \
 			clear; \
 			make clean; \
-			echo "SUCCESS"; \
+			echo "IDNP online"; \
 	fi
 	make
 	echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -"
