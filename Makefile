@@ -69,10 +69,6 @@ raid0-sata:
 	sudo mdadm --create /dev/idnp-raid0-sata --level=0 --raid-devices=2 /dev/sdl /dev/lib
 
 run:
-#	if [ -f INDP ]; \
-		then \
-			mkdir INDP; \
-	fi
 	gcc client.c -o client -lm -Wall
 	if [ -f client ]; \
 		then \
@@ -95,7 +91,11 @@ install:
 			rm -f $(EXECUTABLE) $(OBJECTS); \
 			rm client; \
 	fi
-	echo "INDP installing";
+	echo "IDNP installing";
+	if [ -f ../IDNP ]; \
+		then \
+			mkdir ../IDNP; \
+	fi
 	make;
 	echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -";
 	echo "IDNP installed";
