@@ -69,8 +69,11 @@ run:
 #		> trundle client[%]
 #		> tundle ?
 #	^C
-	echo "client ? > "
-	./client
+	if [ ! -f client ]; \
+		echo "client ? > "
+		./client
+	else;
+		make install
 
 install:
 	clear
