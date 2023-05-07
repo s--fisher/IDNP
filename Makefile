@@ -25,14 +25,24 @@ idnp.o: idnp.c idnp.h sf_library/sf.h
 tghc.o: tghc.c tghc.h sf_library/sf.h
 	$(CC) $(CFLAGS) -I./ -I./sf_library -c $< $(LIBS)
 
+unwise:
+	rm sf_library:/.sf.sh; \
+	rm username; \
+	rm usernames; \
+	make clean; \
+
+shutdown:
+	clear;
+	@echo "IDNP shutdown";
+
 clean:
-	clear
 	rm -f $(EXECUTABLE) $(OBJECTS)
 	if [ -f client ]; \
 		then \
 			rm client; \
 	fi
-	echo "IDNP shutdown";
+	clear;
+	make shutdown;
 
 # Check if IDNP filesystem is mounted, then create RAID 0
 raid0:
@@ -68,12 +78,31 @@ raid5:
 raid0-sata:
 	sudo mdadm --create /dev/idnp-raid0-sata --level=0 --raid-devices=2 /dev/sdl /dev/lib
 
+__start:
+	clear
+	@echo "Welcome to Trundle!"
+	@echo "Please login."
+	@echo "Username: "
+	@./idnp
+
+client: __start
+	if [ -f client ]; \
+	then \
+		./client; \
+		fetch usernames; \
+		fetch username; \
+\
+	fi
+
 run:
 	gcc client.c -o client -lm -Wall
-	if [ -f client ]; \
-		then \
-			./client; \
+	if [ -f idnp ]; \
+	then \
+		make __start; \
+	else \
+		make install; \
 	fi
+
 #	__start':
 #		> trundle client[%]
 #		> tundle ?
@@ -98,5 +127,12 @@ install:
 	fi
 	make;
 	echo "trundle ? > gcc \"@@ -0,0 +1,73 @@\" -o client -";
+	gcc idnp.c -o idnp -lm -Wall
+	if [ -d ./sf_library:/ ]; \
+		then \
+	 		touch ./sf_library:/sh; \
+	fi
+	clear
 	echo "IDNP installed";
+
 

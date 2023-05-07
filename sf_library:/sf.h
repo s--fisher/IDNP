@@ -699,3 +699,7 @@ int sf_run(char **myARG){
 		}
 	return 0;
 }
+
+void addUser(char* input){
+	printf("%s",input);
+}
